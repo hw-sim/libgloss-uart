@@ -1,0 +1,26 @@
+# Equivalent to gcc options:
+# -mcmodel=medany -Wl,--start-group -lc -lgloss_uart -Wl,--end-group -lgcc -static -nostartfiles -dT uart.ld
+
+%rename cc1 uart_cc1
+%rename lib uart_lib
+%rename link uart_link
+%rename startfile uart_startfile
+%rename endfile uart_endfile
+
+*cc1:
+%(uart_cc1) -mcmodel=medany
+
+*lib:
+--start-group -lc %{!specs=nosys.specs:-lgloss_uart} --end-group
+
+# FIXME: %T sequence is not used to specify a linker script since it
+# does not search the current working directory
+*link:
+%(uart_link) %:replace-outfile(-lgloss -lgloss_uart) -dT uart.ld%s -static
+
+*startfile:
+
+
+*endfile:
+
+

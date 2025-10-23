@@ -22,7 +22,7 @@ _start_main:
 _start_secondary:
     /* Synchronize secondary harts */
     BARRIER_WAIT __boot_sync
-    ENTER __main
+    ENTER main
 
 
     .section .rodata

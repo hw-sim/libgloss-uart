@@ -1,0 +1,19 @@
+package:
+  name: libgloss-uart
+  version: 1.0.0
+
+source:
+  path: .
+  use_gitignore: true
+
+build:
+  number: 0
+  script: |
+    mkdir build && cd build
+    ../configure --host=riscv64-unknown-elf --prefix=$PREFIX/riscv-tools/riscv64-unknown-elf
+    make -j$(nproc)
+    make install
+
+requirements:
+  host:
+    - riscv-tools

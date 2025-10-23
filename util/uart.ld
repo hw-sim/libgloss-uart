@@ -5,6 +5,8 @@ SECTIONS
 {
     . = 0x80000000;
 
+    PROVIDE(__text_real_start = .);
+
     /* Keep under a power of 2 to reserve space for TCB */
     PROVIDE (__stack_size_min = 24K);
 
@@ -77,11 +79,6 @@ SECTIONS
         KEEP (*(.dtors))
     }
 
-    /* Host-Target Interface */
-    .htif ALIGN(0x40) : {
-        *(.htif)
-    }
-
     .data : ALIGN (8) {
         *(.data)
         *(.gnu.linkonce.d.*)
@@ -114,7 +111,7 @@ SECTIONS
     PROVIDE (_end = .);
 
     /* Reserve heap space */
-    PROVIDE(__heap_size = 128K);
+    PROVIDE(__heap_size = 256k);
     . += __heap_size;
     . = ALIGN (4K);
     PROVIDE (__heap_end = .);
